@@ -1,0 +1,7 @@
+------ Ajuda do Multiplica-Matrizes com Threads --------
+
+1. Executando o jar
+
+$java -jar nome-projeto.jar
+
+Dúvidas ou sugestões entrar em contato com armando@ufpi.edu.br
