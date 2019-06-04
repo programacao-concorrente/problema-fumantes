@@ -9,23 +9,23 @@ public abstract class Pusher {
 	protected Semaphore tobacco;
 	protected Semaphore paper;
 	protected Semaphore match;
-	protected Semaphore tobaccoSem;
-	protected Semaphore paperSem;
-	protected Semaphore matchSem;
+	protected Semaphore tobaccoGlobal;
+	protected Semaphore paperGlobal;
+	protected Semaphore matchGlobal;
 	protected Semaphore mutex;
 	
 	public Pusher(boolean isMatch, boolean isTobacco, boolean isPaper,
 			Semaphore tobacco, Semaphore paper, Semaphore match,
-			Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem,
+			Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal,
 			Semaphore mutex) {
 		super();
 		
 		this.tobacco = tobacco;
 		this.paper = paper;
 		this.match = match;
-		this.tobaccoSem = tobaccoSem;
-		this.paperSem = paperSem;
-		this.matchSem = matchSem;
+		this.tobaccoGlobal = tobaccoGlobal;
+		this.paperGlobal = paperGlobal;
+		this.matchGlobal = matchGlobal;
 		this.mutex = mutex;
 	}
 

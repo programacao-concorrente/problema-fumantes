@@ -6,23 +6,22 @@ public class PusherB extends Pusher implements Runnable {
 
 	public PusherB(boolean isMatch, boolean isTobacco, boolean isPaper,
 			Semaphore tobacco, Semaphore paper, Semaphore match,
-			Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem,
+			Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal,
 			Semaphore mutex) {
-		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoSem, paperSem, matchSem, mutex);
+		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoGlobal, paperGlobal, matchGlobal, mutex);
 	}
 
 	@Override
 	public void scheduleSmoker() {
 		try {
 			paper.acquire();
-			mutex.acquire();
-			
+			mutex.acquire();			
 			if (isTobacco) {
 				Pusher.isTobacco = false;
-				matchSem.release();
+				matchGlobal.release();
 			} else if (isMatch) {
 				Pusher.isMatch = false;
-				tobaccoSem.release();
+				tobaccoGlobal.release();
 			} else {
 				Pusher.isPaper = true;
 			}

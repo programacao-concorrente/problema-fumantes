@@ -5,24 +5,23 @@ import java.util.concurrent.Semaphore;
 public class PusherA extends Pusher implements Runnable{
 	public PusherA(boolean isMatch, boolean isTobacco, boolean isPaper,
 			Semaphore tobacco, Semaphore paper, Semaphore match,
-			Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem,
+			Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal,
 			Semaphore mutex) {
-		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoSem, paperSem, matchSem, mutex);
+		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoGlobal, paperGlobal, matchGlobal, mutex);
 	}
 
 	@Override
 	public void scheduleSmoker() {
 		try {
 			tobacco.acquire();
-			mutex.acquire();
-			
+			mutex.acquire();			
 			if(isPaper){
 				Pusher.isPaper=false;
-				matchSem.release();
+				matchGlobal.release();
 			}
 			else if(isMatch){
 				Pusher.isMatch=false;
-				paperSem.release();
+				paperGlobal.release();
 			}
 			else {
 				Pusher.isTobacco=true;

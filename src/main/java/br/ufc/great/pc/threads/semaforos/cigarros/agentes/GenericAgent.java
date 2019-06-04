@@ -10,6 +10,12 @@ public class GenericAgent extends Agent implements Runnable {
 		super(agentSemaphore, tobacco, paper, match);
 	}
 
+	private int geraRandomico(int min, int max) {
+		Random randomico = new Random();
+		int item = randomico.nextInt((max-min)+1) + min;
+		return item;
+	}
+
 	@Override
 	public void run() {
 		while (Main.control) {
@@ -17,45 +23,40 @@ public class GenericAgent extends Agent implements Runnable {
 				agentSemaphore.acquire();
 				mutex2.acquire();
 
-				Random randomico = new Random();
-				int item = randomico.nextInt(4);
-
-				if (item == 1) {
+				switch (geraRandomico(1, 3)) {
+				case 1:
 					//AgenteA 
 					try {	
-						if (Main.control){
-							System.out.println("Agente A - Tobaco & Paper");
-							tobacco.release();
-							paper.release();
-						}
+						System.out.println("Agente A - Tobaco & Paper");
+						tobacco.release();
+						paper.release();
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
 						System.out.println(e.getMessage());
-					}					
-				}else if (item == 2) {
+					}										
+					break;
+				case 2: 
 					//AgenteB
 					try {
-						if (Main.control){
-							System.out.println("Agente B - Match & Paper");
-							match.release();
-							paper.release();
-						}
+						System.out.println("Agente B - Match & Paper");
+						match.release();
+						paper.release();
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
 						System.out.println(e.getMessage());
 					}									
-				}else {
+					break;
+				case 3: 
 					//AgenteC
 					try {
-						if (Main.control){
-							System.out.println("Agente C - Tobaco & Match");
-							tobacco.release();
-							match.release();
-						}
+						System.out.println("Agente C - Tobaco & Match");
+						tobacco.release();
+						match.release();
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
 						System.out.println(e.getMessage());
 					}					
+					break;
 				}
 
 			} catch (InterruptedException e) {
