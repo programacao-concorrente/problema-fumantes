@@ -25,30 +25,33 @@ public class Main {
 		Semaphore tobacco = new Semaphore(0);
 		Semaphore paper = new Semaphore(0);
 		Semaphore match = new Semaphore(0);
-		Semaphore tobacoAux = new Semaphore(0);
-		Semaphore paperAux = new Semaphore(0);
-		Semaphore matchAux = new Semaphore(0);
+		Semaphore tobacoGlobal = new Semaphore(0); //Permite compartilhar o semaforo tobaco entre os pushers e os smokers
+		Semaphore paperGlobal = new Semaphore(0); //Permite compartilhar o semaforo paper entre os pushers e os smokers
+		Semaphore matchGlobal = new Semaphore(0); //Permite compartilhar o semaforo match entre os pushers e os smokers
 	
 		Boolean isMatch = new Boolean(false);
 		Boolean isTobacco = new Boolean(false);
 		Boolean isPaper = new Boolean(false);
 
 		Thread agente = new Thread(new GenericAgent(agentSemaphore, tobacco, paper, match), "Agente");
-		Thread pusherA = new Thread(new PusherA(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoAux, paperAux, matchAux, mutex), "PucherA");
-		Thread pusherB = new Thread(new PusherB(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoAux, paperAux, matchAux, mutex), "PucherB");
-		Thread pusherC = new Thread(new PusherC(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoAux, paperAux, matchAux, mutex), "PucherC");
-		Thread smokerA = new Thread(new SmokerWithMatch(tobacoAux, paperAux, matchAux, agentSemaphore),"SmokerWithMatch");
-		Thread smokerB = new Thread(new SmokerWithPaper(tobacoAux, paperAux, matchAux, agentSemaphore),"SmokerWithPaper");
-		Thread smokerC = new Thread(new SmokerWithTobacco(tobacoAux, paperAux, matchAux, agentSemaphore),"SmokerWithTobacco");
+		
+		Thread pusherA = new Thread(new PusherA(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherA");
+		Thread pusherB = new Thread(new PusherB(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherB");
+		Thread pusherC = new Thread(new PusherC(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherC");
+		
+		Thread smokerA = new Thread(new SmokerWithMatch(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithMatch");
+		Thread smokerB = new Thread(new SmokerWithPaper(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithPaper");
+		Thread smokerC = new Thread(new SmokerWithTobacco(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithTobacco");
 		
 		agente.start();
+		
 		pusherA.start();
 		pusherB.start();
 		pusherC.start();
+		
 		smokerA.start();
 		smokerB.start();
 		smokerC.start();
 
 	}
-
 }

@@ -10,8 +10,8 @@ import br.ufc.great.pc.threads.semaforos.cigarros.agentes.Agent;
 
 public class SmokerWithTobacco extends Smoker implements Runnable {
 
-	public SmokerWithTobacco(Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem, Semaphore agentSemaphore) {
-		super(tobaccoSem, paperSem, matchSem, agentSemaphore);
+	public SmokerWithTobacco(Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal, Semaphore agentSemaphore) {
+		super(tobaccoGlobal, paperGlobal, matchGlobal, agentSemaphore);
 	}
 
 	@Override
@@ -29,6 +29,7 @@ public class SmokerWithTobacco extends Smoker implements Runnable {
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -36,7 +37,7 @@ public class SmokerWithTobacco extends Smoker implements Runnable {
 	public void run() {
 		while (Main.control) {
 			try {
-				tobaccoSem.acquire();
+				tobaccoGlobal.acquire();
 				makeCigarette();
 				System.out.println("Weakup Agent...");
 				Agent.mutex2.release();

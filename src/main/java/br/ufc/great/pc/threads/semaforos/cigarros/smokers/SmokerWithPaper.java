@@ -10,8 +10,8 @@ import br.ufc.great.pc.threads.semaforos.cigarros.agentes.Agent;
 
 public class SmokerWithPaper extends Smoker implements Runnable {
 
-	public SmokerWithPaper(Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem, Semaphore agentSemaphore) {
-		super(tobaccoSem, paperSem, matchSem, agentSemaphore);
+	public SmokerWithPaper(Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal, Semaphore agentSemaphore) {
+		super(tobaccoGlobal, paperGlobal, matchGlobal, agentSemaphore);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class SmokerWithPaper extends Smoker implements Runnable {
 	public void run() {
 		while (Main.control) {
 			try {
-				paperSem.acquire();
+				paperGlobal.acquire();
 				makeCigarette();
 				System.out.println("Weakup Agent...");
 				Agent.mutex2.release();

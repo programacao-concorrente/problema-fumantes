@@ -6,9 +6,9 @@ public class PusherC extends Pusher implements Runnable {
 
 	public PusherC(boolean isMatch, boolean isTobacco, boolean isPaper,
 			Semaphore tobacco, Semaphore paper, Semaphore match,
-			Semaphore tobaccoSem, Semaphore paperSem, Semaphore matchSem,
+			Semaphore tobaccoGlobal, Semaphore paperGlobal, Semaphore matchGlobal,
 			Semaphore mutex) {
-		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoSem,paperSem, matchSem, mutex);
+		super(isMatch, isTobacco, isPaper, tobacco, paper, match, tobaccoGlobal,paperGlobal, matchGlobal, mutex);
 	}
 
 	@Override
@@ -16,13 +16,12 @@ public class PusherC extends Pusher implements Runnable {
 		try {
 			match.acquire();
 			mutex.acquire();
-
 			if (isPaper) {
 				Pusher.isPaper = false;
-				tobaccoSem.release();
+				tobaccoGlobal.release();
 			} else if (isTobacco) {
 				Pusher.isTobacco = false;
-				paperSem.release();
+				paperGlobal.release();
 			} else {
 				Pusher.isMatch = true;
 			}
