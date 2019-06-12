@@ -27,7 +27,7 @@ public class GenericAgent extends Agent implements Runnable {
 				case 1:
 					//AgenteA 
 					try {	
-						System.out.println("Agente A - Tobaco & Paper");
+						System.out.println("Agente - Tobaco & Paper");
 						tobacco.release();
 						paper.release();
 						Thread.sleep(1500);
@@ -38,7 +38,7 @@ public class GenericAgent extends Agent implements Runnable {
 				case 2: 
 					//AgenteB
 					try {
-						System.out.println("Agente B - Match & Paper");
+						System.out.println("Agente - Match & Paper");
 						match.release();
 						paper.release();
 						Thread.sleep(1500);
@@ -49,7 +49,7 @@ public class GenericAgent extends Agent implements Runnable {
 				case 3: 
 					//AgenteC
 					try {
-						System.out.println("Agente C - Tobaco & Match");
+						System.out.println("Agente - Tobaco & Match");
 						tobacco.release();
 						match.release();
 						Thread.sleep(1500);
