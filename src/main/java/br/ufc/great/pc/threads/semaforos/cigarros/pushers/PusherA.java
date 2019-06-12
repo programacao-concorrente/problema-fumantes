@@ -2,6 +2,12 @@ package br.ufc.great.pc.threads.semaforos.cigarros.pushers;
 
 import java.util.concurrent.Semaphore;
 
+/**
+ * Processo PucherA coloca tobacco na mesa, 
+ * se paper já está na mesa acorda o Smoker with match, se não se o match já está na mesa acorda o Smoker with Paper
+ * @author armandosoaressousa
+ *
+ */
 public class PusherA extends Pusher implements Runnable{
 	public PusherA(boolean isMatch, boolean isTobacco, boolean isPaper,
 			Semaphore tobacco, Semaphore paper, Semaphore match,
@@ -17,11 +23,11 @@ public class PusherA extends Pusher implements Runnable{
 			mutex.acquire();			
 			if(isPaper){
 				Pusher.isPaper=false;
-				matchGlobal.release();
+				matchGlobal.release(); //sinaliza o Smoker with match
 			}
 			else if(isMatch){
 				Pusher.isMatch=false;
-				paperGlobal.release();
+				paperGlobal.release(); //sinaliza o Smoker with paper
 			}
 			else {
 				Pusher.isTobacco=true;

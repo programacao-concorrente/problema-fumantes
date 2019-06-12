@@ -21,27 +21,35 @@ public class Main {
 	
 	public static void main(String[] args) throws InterruptedException {
 		Semaphore agentSemaphore = new Semaphore(1);
-		Semaphore mutex = new Semaphore(1);
+		Semaphore mutex = new Semaphore(1); //Garante acesso atômico na região crítica do agent
 		Semaphore tobacco = new Semaphore(0);
 		Semaphore paper = new Semaphore(0);
 		Semaphore match = new Semaphore(0);
-		Semaphore tobacoGlobal = new Semaphore(0); //Permite compartilhar o semaforo tobaco entre os pushers e os smokers
-		Semaphore paperGlobal = new Semaphore(0); //Permite compartilhar o semaforo paper entre os pushers e os smokers
-		Semaphore matchGlobal = new Semaphore(0); //Permite compartilhar o semaforo match entre os pushers e os smokers
+		
+		//Foram criados semaforos globais para evitar Deadlock entre os Smokers que dependem dos mesmos ingredientes
+		Semaphore tobacoGlobal = new Semaphore(0); //Sinaliza o Smoker with tobacco
+		Semaphore paperGlobal = new Semaphore(0); //Sinaliza o Smoker with paper
+		Semaphore matchGlobal = new Semaphore(0); //Sinaliza o Smoker with match
 	
-		Boolean isMatch = new Boolean(false);
+		//As variaveis booleanas indicam se o ingrediente já está ou não na mesa
+		Boolean isMatch = new Boolean(false); 
 		Boolean isTobacco = new Boolean(false);
 		Boolean isPaper = new Boolean(false);
 
 		Thread agente = new Thread(new GenericAgent(agentSemaphore, tobacco, paper, match), "Agente");
 		
-		Thread pusherA = new Thread(new PusherA(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherA");
-		Thread pusherB = new Thread(new PusherB(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherB");
-		Thread pusherC = new Thread(new PusherC(isMatch, isTobacco, isPaper, tobacco, paper, match, tobacoGlobal, paperGlobal, matchGlobal, mutex), "PucherC");
+		//Processo PucherA coloca tobacco na mesa, se paper já está na mesa acorda o Smoker with match, se não se o match já está na mesa acorda o Smoker with Paper
+		Thread pusherA = new Thread(new PusherA(isMatch, isTobacco, isPaper, tobacco, null, null, null, paperGlobal, matchGlobal, mutex), "PusherA");
 		
-		Thread smokerA = new Thread(new SmokerWithMatch(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithMatch");
-		Thread smokerB = new Thread(new SmokerWithPaper(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithPaper");
-		Thread smokerC = new Thread(new SmokerWithTobacco(tobacoGlobal, paperGlobal, matchGlobal, agentSemaphore),"SmokerWithTobacco");
+		//Processo PucherB coloca paper na mesa, se o tobacco já está na mesa acorda o Smoker with match, se não o match já está na mesa acorda o Smoker with Tobacco
+		Thread pusherB = new Thread(new PusherB(isMatch, isTobacco, isPaper, null, paper, null, tobacoGlobal, null, matchGlobal, mutex), "PusherB");
+		
+		//Processo PusherC coloca match na mesa, se o tobacco já está na mesa acorda o Smoker with paper, se não o paper jestá na mesa acorda o Smoker with Tobacco
+		Thread pusherC = new Thread(new PusherC(isMatch, isTobacco, isPaper, null, null, match, tobacoGlobal, paperGlobal, null, mutex), "PusherC");
+		
+		Thread smokerA = new Thread(new SmokerWithMatch(null, null, matchGlobal, agentSemaphore),"SmokerWithMatch");
+		Thread smokerB = new Thread(new SmokerWithPaper(null, paperGlobal, null, agentSemaphore),"SmokerWithPaper");
+		Thread smokerC = new Thread(new SmokerWithTobacco(tobacoGlobal, null, null, agentSemaphore),"SmokerWithTobacco");
 		
 		agente.start();
 		

@@ -20,7 +20,7 @@ public class SmokerWithTobacco extends Smoker implements Runnable {
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				Date date = new Date();
-				System.out.println("Smoker with tobacco making cigarette "+dateFormat.format(date));
+				System.out.println("Smoker with tobacco faz cigarro. "+dateFormat.format(date));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -39,7 +39,7 @@ public class SmokerWithTobacco extends Smoker implements Runnable {
 			try {
 				tobaccoGlobal.acquire();
 				makeCigarette();
-				System.out.println("Weakup Agent...");
+				System.out.println("Acorda Agente...\n");
 				Agent.mutex2.release();
 				agentSemaphore.release();
 			} catch (InterruptedException e) {

@@ -19,7 +19,7 @@ public class SmokerWithMatch extends Smoker implements Runnable {
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				Date date = new Date();
-				System.out.println("Smoker with match making cigarette "+dateFormat.format(date));
+				System.out.println("Smoker with match faz o cigarro."+dateFormat.format(date));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -38,7 +38,7 @@ public class SmokerWithMatch extends Smoker implements Runnable {
 			try {
 				matchGlobal.acquire();
 				makeCigarette();
-				System.out.println("Weakup Agent...");
+				System.out.println("Acorda Agente...\n");
 				Agent.mutex2.release();
 				agentSemaphore.release();
 			} catch (InterruptedException e) {
