@@ -52,11 +52,11 @@ void process_smoker2(){
 //representa o processo smoker que possui o match
 void process_smoker3(){
 	while(true){
-		<await (vsm == 1) vsm = vsm - 1> 
+		<await (vsm == 1) vsm = vsm - 1;> 
 		pega_tobaco();
 		pega_paper();
 		fuma();
-		va = va + 1; //habilita o processo agente 
+		<va = va + 1;> //habilita o processo agente 
 	}
 }
 
