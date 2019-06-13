@@ -55,6 +55,9 @@ Smoker with tobacco faz cigarro. 2019/06/13 14:35:06
 SmokerWithTobacco fumando...
 Acorda Agente...
 ```
+
+[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/lsKMNMCi0jBxnsDCnNWtD6zUx)
+
 # Descrição do problema dos fumantes com cigarros
 
 No problema “Cigarrete Smokers” existem 4 processos envolvidos:
