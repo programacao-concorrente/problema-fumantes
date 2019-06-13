@@ -56,7 +56,7 @@ SmokerWithTobacco fumando...
 Acorda Agente...
 ```
 
-[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/lsKMNMCi0jBxnsDCnNWtD6zUx)
+[![asciicast](https://asciinema.org/a/lsKMNMCi0jBxnsDCnNWtD6zUx.png)](https://asciinema.org/a/lsKMNMCi0jBxnsDCnNWtD6zUx)
 
 # Descrição do problema dos fumantes com cigarros
 
