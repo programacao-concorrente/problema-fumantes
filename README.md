@@ -6,4 +6,4 @@ $mvn clean compile assembly:single
 
 2. Executando o jar 
 
-$java -jar nome-projeto.jar
+$java -jar target/threads-1.0.0-jar-with-dependencies.jar 
