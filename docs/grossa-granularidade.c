@@ -1,6 +1,5 @@
 int item; //item {[1,'match'], [2, 'paper'], [3, 'tobacco']}
 
-int va=1; //representa o agente
 int va=1; // representa o agente que vai colocar os ingredientes na mesa
 int vsm=0; // representa o Smoker que possui o Match 
 int vsp=0; // representa o Smoker que possui o Paper
