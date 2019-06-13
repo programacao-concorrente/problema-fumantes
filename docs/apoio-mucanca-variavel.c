@@ -36,7 +36,7 @@ void process_agent(){
 	}
 }
 
-//representa o processo smoker que possui o paper
+//representa o processo smoker que possui o tobacco
 void process_smoker1(){
 	while(true){
 		<await (vst < qtdSmokerTobaccoFummou)
